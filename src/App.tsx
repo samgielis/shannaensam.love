@@ -7,8 +7,7 @@ import {
   Stack,
   Button,
   useDisclosure,
-  Switch,
-  HStack,
+  Image,
 } from "@chakra-ui/react";
 import { customTheme } from "./theme";
 import { MoreInfoModal } from "./components/MoreInfoModal";
@@ -19,12 +18,14 @@ export const App = () => {
 
   return <ChakraProvider theme={customTheme}>
   <Box>
+    <Image pos='absolute' w='100vw' h='100vh' objectFit={'cover'} src={`bg-xs.jpg`}  zIndex='-1' filter='blur(2px)'/>
+    <Image pos='absolute' w='100vw' h='100vh' objectFit={'cover'} srcSet={`bg-md.jpg 2048w, bg-lg.jpg 4096w, bg-full.jpg 4096w`}/>
       <Box
         textAlign="center"
         color="white"
         fontSize="xl"
         h="100vh"
-        bgImage={"bg3.jpg"}
+        //bgImage={`image-set(url("bg-xs.jpg") .2x, url("bg-sm.jpg") .5x, url("bg-md.jpg") .8x, url("bg-lg.jpg") 1x, url("bg-full.jpg") 2x)`}
         bgSize={"cover"}
         bgPos={"center"}
         >
@@ -39,7 +40,6 @@ export const App = () => {
             <Stack spacing={[-2, -4, -5]} >
               <Heading
                 fontSize={['7xl','8xl',"9xl"]}
-                shadow={"lg"}
                 fontFamily={"Euphoria Script"}
                 >
                 Shanna & Sam
