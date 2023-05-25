@@ -1,6 +1,10 @@
 import { extendTheme } from "@chakra-ui/react";
 
 export const customTheme = extendTheme({
+    fonts: {
+        heading: `'Euphoria Script', sans-serif`,
+        subTitle: `Quicksand`,
+      },
     colors: {
         loveCopper: {
             '50': '#fcf5f0',

@@ -1,38 +1,65 @@
-import * as React from "react"
+import * as React from "react";
 import {
   ChakraProvider,
   Box,
-  Text,
-  Link,
   VStack,
-  Code,
-  Grid,
-  theme,
-} from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+  Heading,
+  Stack,
+  Button,
+  useDisclosure,
+  Switch,
+  HStack,
+} from "@chakra-ui/react";
+import { customTheme } from "./theme";
+import { MoreInfoModal } from "./components/MoreInfoModal";
 
-export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
+export const App = () => {
+  
+  const {isOpen, onClose, onOpen} = useDisclosure();
+
+  return <ChakraProvider theme={customTheme}>
+  <Box>
+      <Box
+        textAlign="center"
+        color="white"
+        fontSize="xl"
+        h="100vh"
+        bgImage={"bg3.jpg"}
+        bgSize={"cover"}
+        bgPos={"center"}
+        >
+        <Box
+          pos="absolute"
+          pb={16}
+          bottom={0}
+          w="full"
+          bg="linear-gradient(0deg, rgba(0,0,0,.7) 0%, rgba(0,212,255,0) 100%);"
           >
-            Learn Chakra!
-          </Link>
-        </VStack>
-      </Grid>
+          <VStack fontWeight={"bold"} w="full" spacing={5}>
+            <Stack spacing={-5} >
+              <Heading
+                fontSize={"9xl"}
+                shadow={"lg"}
+                fontFamily={"Euphoria Script"}
+                >
+                Shanna & Sam
+              </Heading>
+              <Heading
+                fontSize={"5xl"}
+                color="bermuda.200"
+                fontFamily={"Quicksand"}
+                >
+                29 September 2023
+              </Heading>
+            </Stack>
+            <Button colorScheme={'loveCopper'} size="lg" onClick={onOpen}>
+              Meer info
+            </Button>
+            <MoreInfoModal isOpen={isOpen} onClose={onClose}/>
+          </VStack>
+        </Box>
+      </Box>
     </Box>
   </ChakraProvider>
-)
+  
+}
