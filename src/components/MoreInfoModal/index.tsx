@@ -92,7 +92,7 @@ const MainContentDutch = ({ onEmail }: { onEmail(): void }) => {
         door.
       </Text>
       <Text>
-        Als je er niet bij kan zijn of al vragen hebt, mag je ons al iets laten
+        Als je er niet bij kan zijn of al vragen hebt, mag je ons iets laten
         weten via{" "}
         <Button
           variant="link"
