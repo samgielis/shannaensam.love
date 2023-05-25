@@ -32,14 +32,14 @@ export const MoreInfoModal = (
     toast({ title: "E-mailadres gekopieerd.", status: "success" });
   };
   return (
-    <Modal {...props} size="lg" isCentered>
+    <Modal {...props} size={['full',"lg"]} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader fontFamily={"heading"} fontSize="5xl">
+        <ModalHeader fontFamily={"heading"} fontSize={['4xl',"5xl"]}>
           {!isEnglish ? "Wij gaan trouwen!" : "We're getting married!"}
         </ModalHeader>
         <ModalCloseButton />
-        <ModalBody fontSize={"lg"}>
+        <ModalBody fontSize={['md',"lg"]}>
           {isEnglish ? (
             <MainContentEnglish onEmail={onEmail} />
           ) : (
