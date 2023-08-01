@@ -10,4 +10,14 @@ export const INVITATIONS: Invitation[] = [
     plusOne: true,
     tier: 1,
   },
+  {
+    aanspreking: "Team curatie",
+    plusOne: false,
+    tier: 2,
+  },
+  {
+    aanspreking: "Team redactie",
+    plusOne: false,
+    tier: 3,
+  },
 ];
