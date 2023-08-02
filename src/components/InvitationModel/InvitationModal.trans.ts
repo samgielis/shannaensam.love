@@ -3,6 +3,10 @@ type Translation = {
   [lang in SupportedLanguage]: string;
 };
 export const translations = {
+  next: {
+    nl: "Verder",
+    en: "Continue",
+  },
   hourAsLetter: {
     nl: "u",
     en: "h",

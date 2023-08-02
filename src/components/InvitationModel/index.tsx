@@ -41,7 +41,7 @@ import {
   useSteps,
   VStack,
 } from "@chakra-ui/react";
-import React, { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren, useRef, useState } from "react";
 import { Invitation } from "../../data/Invitations";
 import { RSVP } from "../../data/RSVP";
 import {
@@ -71,17 +71,17 @@ export const InvitationModal = ({
     count: steps.length,
   });
 
-  const rsvp: RSVP = {
-    email: "jos@gielis.com",
-    amountOfPeople: 2,
-    names: ["Jos", "Greta"],
-    notes: "Ja hallo wij zijn gelukkig",
-    joinsCivilWedding: true,
-    joinsCeremony: true,
-    joinsDiner: true,
+  const stepProps = { language, invitation };
+  const [rsvp, setRSVP] = useState<RSVP>({
+    email: "",
+    amountOfPeople: 1,
+    names: [],
+    notes: "",
+    joinsCivilWedding: false,
+    joinsCeremony: false,
+    joinsDiner: false,
     joinsParty: false,
-  };
-
+  });
   return (
     <Modal
       {...props}
@@ -103,19 +103,40 @@ export const InvitationModal = ({
             <form name="contact" method="POST" data-netlify="true">
               <input type="hidden" name="form-name" value="contact" />
               <Hideable hidden={activeStep !== 0}>
-                <Step1 language={language} onNext={() => setActiveStep(1)} />
+                <Step1
+                  {...stepProps}
+                  onNext={(rsvpUpdate) => {
+                    setRSVP({ ...rsvp, ...rsvpUpdate });
+                    setActiveStep(1);
+                  }}
+                />
               </Hideable>
               <Hideable hidden={activeStep !== 1}>
-                <Step2 language={language} invitation={invitation} />
+                <Step2
+                  {...stepProps}
+                  onNext={(rsvpUpdate) => {
+                    setRSVP({ ...rsvp, ...rsvpUpdate });
+                    setActiveStep(2);
+                  }}
+                />
               </Hideable>
               <Hideable hidden={activeStep !== 2}>
-                <Step3 language={language} invitation={invitation} />
+                <Step3
+                  {...stepProps}
+                  onNext={(rsvpUpdate) => {
+                    setRSVP({ ...rsvp, ...rsvpUpdate });
+                    setActiveStep(3);
+                  }}
+                />
               </Hideable>
               <Hideable hidden={activeStep !== 3}>
                 <Step4
-                  language={language}
-                  invitation={invitation}
+                  {...stepProps}
                   rsvp={rsvp}
+                  onNext={(rsvpUpdate) => {
+                    setRSVP({ ...rsvp, ...rsvpUpdate });
+                    alert(JSON.stringify(rsvp));
+                  }}
                 />
               </Hideable>
             </form>
@@ -181,19 +202,20 @@ const Hideable = ({ children, hidden }: HideableProps) => {
     </Box>
   );
 };
-const Step1 = ({
-  language,
-  onNext,
-}: {
+
+interface StepProps {
   language: SupportedLanguage;
-  onNext: () => void;
-}) => {
+  onNext: (rsvpUpdate: Partial<RSVP>) => void;
+  invitation: Invitation;
+}
+
+const Step1 = ({ language, onNext }: StepProps) => {
   return (
     <Stack border="1px solid" borderColor="gray.200" p={3} borderRadius={"lg"}>
       <Text>{trans(translations.invitation.step1.content, language)}</Text>
       <Heading fontSize={"3xl"}>Shanna & Sam</Heading>
       <ButtonGroup alignSelf={"end"} size={["sm", "md"]}>
-        <Button colorScheme={"green"} onClick={onNext}>
+        <Button colorScheme={"green"} onClick={() => onNext({})}>
           {trans(translations.invitation.step1.accept, language)}
         </Button>
         <Button colorScheme={"red"}>
@@ -204,15 +226,11 @@ const Step1 = ({
   );
 };
 
-const Step2 = ({
-  language,
-  invitation,
-}: {
-  language: SupportedLanguage;
-  invitation: Invitation;
-}) => {
-  const amountInputRef = React.createRef<HTMLInputElement>();
+const Step2 = ({ language, invitation, onNext }: StepProps) => {
+  const emailInputRef = React.createRef<HTMLInputElement>();
   const [amountOfPeople, setAmountOfPeople] = useState(1);
+  const nameInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
   return (
     <Stack
       spacing={4}
@@ -223,7 +241,7 @@ const Step2 = ({
     >
       <FormControl isRequired>
         <FormLabel>Email</FormLabel>
-        <Input type="email" name="email" />
+        <Input ref={emailInputRef} type="email" name="email" />
         <FormHelperText>
           {trans(translations.invitation.step2.inputs.email.helpText, language)}
         </FormHelperText>
@@ -238,7 +256,6 @@ const Step2 = ({
             defaultValue={1}
             min={1}
             max={10}
-            ref={amountInputRef}
             onChange={(_, valueAsNumber) =>
               setAmountOfPeople(Math.min(Math.max(valueAsNumber || 0, 1), 10))
             }
@@ -270,23 +287,37 @@ const Step2 = ({
                 language
               )} ${index + 1}`}
               isRequired
+              ref={(el) => (nameInputRefs.current[index] = el)}
             />
           ))}
         </Stack>
       </FormControl>
+      <Button
+        onClick={() => {
+          onNext({
+            email: emailInputRef.current?.value,
+            amountOfPeople,
+            names:
+              nameInputRefs.current.map((input) => input?.value || "") || [],
+          });
+        }}
+        colorScheme={"green"}
+      >
+        {trans(translations.next, language)}
+      </Button>
     </Stack>
   );
 };
 
-const Step3 = ({
-  language,
-  invitation,
-}: {
-  language: SupportedLanguage;
-  invitation: Invitation;
-}) => {
+const Step3 = ({ language, invitation, onNext }: StepProps) => {
   const { tier } = invitation;
   const h = trans(translations.hourAsLetter, language);
+
+  const joinsCivilWeddingInputRef = React.createRef<HTMLInputElement>();
+  const joinsCeremonyInputRef = React.createRef<HTMLInputElement>();
+  const joinsDinerInputRef = React.createRef<HTMLInputElement>();
+  const joinsPartyInputRef = React.createRef<HTMLInputElement>();
+
   return (
     <Stack
       spacing={3}
@@ -312,7 +343,11 @@ const Step3 = ({
                     Grote markt 1, 3290 Diest
                   </Text>
                 </Stack>
-                <Checkbox ml={2} value="stadhuis">
+                <Checkbox
+                  ml={2}
+                  value="stadhuis"
+                  ref={joinsCivilWeddingInputRef}
+                >
                   {`13${h}30`} -{" "}
                   {trans(translations.invitation.step3.civilWedding, language)}
                 </Checkbox>
@@ -329,18 +364,22 @@ const Step3 = ({
               </Stack>
               <Stack>
                 {tier === 1 && (
-                  <Checkbox ml={2} value="ceremonie">
+                  <Checkbox
+                    ml={2}
+                    value="ceremonie"
+                    ref={joinsCeremonyInputRef}
+                  >
                     18{h} -{" "}
                     {trans(translations.invitation.step3.ceremony, language)}
                   </Checkbox>
                 )}
                 {tier < 3 && (
-                  <Checkbox ml={2} value="diner">
+                  <Checkbox ml={2} value="diner" ref={joinsDinerInputRef}>
                     19{h} -{" "}
                     {trans(translations.invitation.step3.diner, language)}
                   </Checkbox>
                 )}
-                <Checkbox ml={2} value="feest">
+                <Checkbox ml={2} value="feest" ref={joinsPartyInputRef}>
                   22{h} - {trans(translations.invitation.step3.party, language)}
                 </Checkbox>
               </Stack>
@@ -348,6 +387,20 @@ const Step3 = ({
           </Stack>
         </CheckboxGroup>
       </FormControl>
+      <Button
+        onClick={() => {
+          onNext({
+            joinsCivilWedding:
+              joinsCivilWeddingInputRef.current?.checked || false,
+            joinsCeremony: joinsCeremonyInputRef.current?.checked || false,
+            joinsDiner: joinsDinerInputRef.current?.checked || false,
+            joinsParty: joinsPartyInputRef.current?.checked || false,
+          });
+        }}
+        colorScheme={"green"}
+      >
+        {trans(translations.next, language)}
+      </Button>
     </Stack>
   );
 };
@@ -356,13 +409,10 @@ const Step4 = ({
   language,
   invitation,
   rsvp,
-}: {
-  language: SupportedLanguage;
-  invitation: Invitation;
-  rsvp: RSVP;
-}) => {
+  onNext,
+}: StepProps & { rsvp: RSVP }) => {
   const { tier } = invitation;
-  const h = trans(translations.hourAsLetter, language);
+  const notesInputRef = React.createRef<HTMLTextAreaElement>();
   return (
     <Stack
       spacing={3}
@@ -423,6 +473,7 @@ const Step4 = ({
           {trans(translations.invitation.step4.notes.label, language)}
         </FormLabel>
         <Textarea
+          ref={notesInputRef}
           placeholder={trans(
             translations.invitation.step4.notes.placeholder,
             language
@@ -430,7 +481,12 @@ const Step4 = ({
         />
       </FormControl>
 
-      <Button colorScheme={"green"}>
+      <Button
+        colorScheme={"green"}
+        onClick={() => {
+          onNext({ notes: notesInputRef.current?.value || "" });
+        }}
+      >
         {trans(translations.invitation.step4.confirm, language)}
       </Button>
     </Stack>
