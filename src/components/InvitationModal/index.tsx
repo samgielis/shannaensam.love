@@ -223,6 +223,23 @@ const Step2 = ({ language, invitation, onNext }: StepProps) => {
   const [amountOfPeople, setAmountOfPeople] = useState(1);
   const nameInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
+  const [canContinue, setCanContinue] = useState(false);
+
+  const updateValidity = () => {
+    if (!emailInputRef.current || !nameInputRefs.current) return;
+
+    const validEmail = !!emailInputRef.current?.checkValidity();
+    const validAmount = amountOfPeople > 0 && amountOfPeople < 11;
+    const amountOfValidNames = nameInputRefs.current.reduce(
+      (acc, input) => acc + (!!input?.checkValidity() ? 1 : 0),
+      0
+    );
+
+    setCanContinue(
+      validEmail && validAmount && amountOfValidNames >= amountOfPeople
+    );
+  };
+
   return (
     <Stack
       spacing={4}
@@ -233,7 +250,12 @@ const Step2 = ({ language, invitation, onNext }: StepProps) => {
     >
       <FormControl isRequired>
         <FormLabel>Email</FormLabel>
-        <Input ref={emailInputRef} type="email" name="email" />
+        <Input
+          ref={emailInputRef}
+          type="email"
+          name="email"
+          onChange={updateValidity}
+        />
         <FormHelperText>
           {trans(translations.invitation.step2.inputs.email.helpText, language)}
         </FormHelperText>
@@ -248,14 +270,19 @@ const Step2 = ({ language, invitation, onNext }: StepProps) => {
             defaultValue={1}
             min={1}
             max={10}
-            onChange={(_, valueAsNumber) =>
-              setAmountOfPeople(Math.min(Math.max(valueAsNumber || 0, 1), 10))
-            }
+            onChange={(_, valueAsNumber) => {
+              setAmountOfPeople(Math.min(Math.max(valueAsNumber || 0, 1), 10));
+              setTimeout(updateValidity);
+            }}
           >
-            <NumberInputField />
+            <NumberInputField onChange={() => setTimeout(updateValidity)} />
             <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
+              <NumberIncrementStepper
+                onClick={() => setTimeout(updateValidity)}
+              />
+              <NumberDecrementStepper
+                onClick={() => setTimeout(updateValidity)}
+              />
             </NumberInputStepper>
           </NumberInput>
         </FormControl>
@@ -280,6 +307,7 @@ const Step2 = ({ language, invitation, onNext }: StepProps) => {
               )} ${index + 1}`}
               isRequired
               ref={(el) => (nameInputRefs.current[index] = el)}
+              onChange={updateValidity}
             />
           ))}
         </Stack>
@@ -294,6 +322,7 @@ const Step2 = ({ language, invitation, onNext }: StepProps) => {
           });
         }}
         colorScheme={"green"}
+        isDisabled={!canContinue}
       >
         {trans(translations.next, language)}
       </Button>
