@@ -44,11 +44,7 @@ import {
 import React, { PropsWithChildren, useRef, useState } from "react";
 import { Invitation } from "../../data/Invitations";
 import { RSVP } from "../../data/RSVP";
-import {
-  SupportedLanguage,
-  trans,
-  translations,
-} from "./InvitationModal.trans";
+import { SupportedLanguage, trans, translations } from "../../translations";
 
 type InvitationModalProps = Pick<ModalProps, "isOpen" | "onClose"> & {
   invitation: Invitation;
