@@ -1,6 +1,6 @@
 import { ChakraProvider, useDisclosure } from "@chakra-ui/react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { InvitationModal } from "./components/InvitationModel";
+import { InvitationModal } from "./components/InvitationModal";
 import { Invitation, INVITATIONS } from "./data/Invitations";
 import { Layout } from "./Layout";
 import { customTheme } from "./theme";
