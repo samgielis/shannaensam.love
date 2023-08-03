@@ -27,6 +27,12 @@ export const translations = {
     nl: "E-mail",
     en: "Email",
   },
+  moreInfo: {
+    buttonLabel: {
+      nl: "Meer info",
+      en: "More info",
+    },
+  },
   cantMakeIt: {
     title: {
       nl: `Da's jammer!`,

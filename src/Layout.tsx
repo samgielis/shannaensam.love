@@ -9,6 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
 import { MoreInfoModal } from "./components/MoreInfoModal";
+import { useLanguage } from "./context/LanguageContext";
+import { trans, translations } from "./translations";
 
 const fullcreenProps = {
   h: "100vh",
@@ -18,7 +20,7 @@ const fullcreenProps = {
 
 export const Layout = ({ children }: PropsWithChildren) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
-
+  const { language } = useLanguage();
   return (
     <Box>
       <Image
@@ -72,7 +74,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
               size={["md", "lg"]}
               onClick={onOpen}
             >
-              Meer info
+              {trans(translations.moreInfo.buttonLabel, language)}
             </Button>
             <MoreInfoModal isOpen={isOpen} onClose={onClose} />
             {children}
