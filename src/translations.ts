@@ -7,9 +7,36 @@ export const translations = {
     nl: "Verder",
     en: "Continue",
   },
+  cancel: {
+    nl: "Terug",
+    en: "Back",
+  },
+  confirm: {
+    nl: "Verzend",
+    en: "Submit",
+  },
   hourAsLetter: {
     nl: "u",
     en: "h",
+  },
+  name: {
+    nl: "Naam",
+    en: "Name",
+  },
+  email: {
+    nl: "E-mail",
+    en: "Email",
+  },
+  cantMakeIt: {
+    title: {
+      nl: `Da's jammer!`,
+      en: `Sorry you can't make it!`,
+    },
+    message: {
+      nl: `We zullen je missen op de dansvloer! Laat ons nog even weten wie je bent, dan noteren we dat je er niet bij kan zijn.`,
+      en: `You’ll be missed on the dance floor! Please let us know your name, so we can note you can’t be there.`,
+    },
+    inputs: {},
   },
   invitation: {
     title: {
@@ -124,10 +151,6 @@ export const translations = {
       canContact: {
         nl: "We kunnen je contacteren op",
         en: "We can contact you through",
-      },
-      confirm: {
-        nl: "Bevestigen",
-        en: "Confirm",
       },
     },
   },

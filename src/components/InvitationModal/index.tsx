@@ -36,6 +36,7 @@ import {
   Text,
   Textarea,
   UnorderedList,
+  useDisclosure,
   useSteps,
   VStack,
 } from "@chakra-ui/react";
@@ -43,6 +44,7 @@ import React, { PropsWithChildren, useRef, useState } from "react";
 import { Invitation } from "../../data/Invitations";
 import { RSVP } from "../../data/RSVP";
 import { SupportedLanguage, trans, translations } from "../../translations";
+import { CantMakeItModal } from "../CantMakeItModal";
 import { LanguageToggle } from "../LanguageToggle";
 
 type InvitationModalProps = Pick<ModalProps, "isOpen" | "onClose"> & {
@@ -53,6 +55,11 @@ export const InvitationModal = ({
   ...props
 }: InvitationModalProps) => {
   const [language, setLanguage] = useState<SupportedLanguage>("nl");
+  const {
+    isOpen: isCantMakeItOpen,
+    onOpen: onOpenCantMakeIt,
+    onClose: onCloseCantMakeIt,
+  } = useDisclosure();
 
   const steps = [
     { title: trans(translations.invitation.step1.title, language) },
@@ -78,97 +85,101 @@ export const InvitationModal = ({
     joinsParty: false,
   });
   return (
-    <Modal
-      {...props}
-      size={["full", "lg"]}
-      isCentered
-      closeOnOverlayClick={false}
-    >
-      <ModalOverlay />
-      <ModalContent maxH={"full"} overflow="auto">
-        <ModalHeader fontFamily={"heading"} fontSize={["4xl", "4xl"]}>
-          {trans(translations.invitation.title, language)}
-        </ModalHeader>
-        <ModalCloseButton />
-        <ModalBody fontSize={["md", "lg"]}>
-          <Stack spacing={4}>
-            <Text fontSize={"lg"}>
-              <b>{steps[activeStep].title}</b>
-            </Text>
-            <form name="contact" method="POST" data-netlify="true">
-              <input type="hidden" name="form-name" value="contact" />
-              <Hideable hidden={activeStep !== 0}>
-                <Step1
-                  {...stepProps}
-                  onNext={(rsvpUpdate) => {
-                    setRSVP({ ...rsvp, ...rsvpUpdate });
-                    setActiveStep(1);
-                  }}
-                />
-              </Hideable>
-              <Hideable hidden={activeStep !== 1}>
-                <Step2
-                  {...stepProps}
-                  onNext={(rsvpUpdate) => {
-                    setRSVP({ ...rsvp, ...rsvpUpdate });
-                    setActiveStep(2);
-                  }}
-                />
-              </Hideable>
-              <Hideable hidden={activeStep !== 2}>
-                <Step3
-                  {...stepProps}
-                  onNext={(rsvpUpdate) => {
-                    setRSVP({ ...rsvp, ...rsvpUpdate });
-                    setActiveStep(3);
-                  }}
-                />
-              </Hideable>
-              <Hideable hidden={activeStep !== 3}>
-                <Step4
-                  {...stepProps}
-                  rsvp={rsvp}
-                  onNext={(rsvpUpdate) => {
-                    setRSVP({ ...rsvp, ...rsvpUpdate });
-                    alert(JSON.stringify(rsvp));
-                  }}
-                />
-              </Hideable>
-            </form>
-          </Stack>
-        </ModalBody>
+    <>
+      <CantMakeItModal isOpen={isCantMakeItOpen} onClose={onCloseCantMakeIt} />
+      <Modal
+        {...props}
+        size={["full", "lg"]}
+        isCentered
+        closeOnOverlayClick={false}
+      >
+        <ModalOverlay />
+        <ModalContent maxH={"full"} overflow="auto">
+          <ModalHeader fontFamily={"heading"} fontSize={["4xl", "4xl"]}>
+            {trans(translations.invitation.title, language)}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody fontSize={["md", "lg"]}>
+            <Stack spacing={4}>
+              <Text fontSize={"lg"}>
+                <b>{steps[activeStep].title}</b>
+              </Text>
+              <form name="contact" method="POST" data-netlify="true">
+                <input type="hidden" name="form-name" value="contact" />
+                <Hideable hidden={activeStep !== 0}>
+                  <Step1
+                    {...stepProps}
+                    onNext={(rsvpUpdate) => {
+                      setRSVP({ ...rsvp, ...rsvpUpdate });
+                      setActiveStep(1);
+                    }}
+                    onCantMakeIt={onOpenCantMakeIt}
+                  />
+                </Hideable>
+                <Hideable hidden={activeStep !== 1}>
+                  <Step2
+                    {...stepProps}
+                    onNext={(rsvpUpdate) => {
+                      setRSVP({ ...rsvp, ...rsvpUpdate });
+                      setActiveStep(2);
+                    }}
+                  />
+                </Hideable>
+                <Hideable hidden={activeStep !== 2}>
+                  <Step3
+                    {...stepProps}
+                    onNext={(rsvpUpdate) => {
+                      setRSVP({ ...rsvp, ...rsvpUpdate });
+                      setActiveStep(3);
+                    }}
+                  />
+                </Hideable>
+                <Hideable hidden={activeStep !== 3}>
+                  <Step4
+                    {...stepProps}
+                    rsvp={rsvp}
+                    onNext={(rsvpUpdate) => {
+                      setRSVP({ ...rsvp, ...rsvpUpdate });
+                      alert(JSON.stringify(rsvp));
+                    }}
+                  />
+                </Hideable>
+              </form>
+            </Stack>
+          </ModalBody>
 
-        <ModalFooter>
-          <VStack w="full">
-            <Stepper size="md" index={activeStep} gap="0" w="full">
-              {steps.map((step, index) => (
-                <Step
-                  key={index}
-                  onClick={() => setActiveStep(index)}
-                  as={HStack}
-                  gap={0}
-                  spacing={0}
-                  m={0}
-                >
-                  <StepIndicator ml={0} cursor="pointer">
-                    <StepStatus
-                      complete={<StepIcon />}
-                      incomplete={<StepNumber />}
-                      active={<StepNumber />}
-                    />
-                  </StepIndicator>
-                  <StepSeparator />
-                </Step>
-              ))}
-            </Stepper>
-            <LanguageToggle
-              currentLanguage={language}
-              onLanguageChange={setLanguage}
-            />
-          </VStack>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+          <ModalFooter>
+            <VStack w="full">
+              <Stepper size="md" index={activeStep} gap="0" w="full">
+                {steps.map((step, index) => (
+                  <Step
+                    key={index}
+                    onClick={() => setActiveStep(index)}
+                    as={HStack}
+                    gap={0}
+                    spacing={0}
+                    m={0}
+                  >
+                    <StepIndicator ml={0} cursor="pointer">
+                      <StepStatus
+                        complete={<StepIcon />}
+                        incomplete={<StepNumber />}
+                        active={<StepNumber />}
+                      />
+                    </StepIndicator>
+                    <StepSeparator />
+                  </Step>
+                ))}
+              </Stepper>
+              <LanguageToggle
+                currentLanguage={language}
+                onLanguageChange={setLanguage}
+              />
+            </VStack>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 
@@ -188,7 +199,11 @@ interface StepProps {
   invitation: Invitation;
 }
 
-const Step1 = ({ language, onNext }: StepProps) => {
+const Step1 = ({
+  language,
+  onNext,
+  onCantMakeIt,
+}: StepProps & { onCantMakeIt(): void }) => {
   return (
     <Stack border="1px solid" borderColor="gray.200" p={3} borderRadius={"lg"}>
       <Text>{trans(translations.invitation.step1.content, language)}</Text>
@@ -197,7 +212,7 @@ const Step1 = ({ language, onNext }: StepProps) => {
         <Button colorScheme={"green"} onClick={() => onNext({})}>
           {trans(translations.invitation.step1.accept, language)}
         </Button>
-        <Button colorScheme={"red"}>
+        <Button colorScheme={"red"} onClick={onCantMakeIt}>
           {trans(translations.invitation.step1.decline, language)}
         </Button>
       </ButtonGroup>
@@ -466,7 +481,7 @@ const Step4 = ({
           onNext({ notes: notesInputRef.current?.value || "" });
         }}
       >
-        {trans(translations.invitation.step4.confirm, language)}
+        {trans(translations.confirm, language)}
       </Button>
     </Stack>
   );
