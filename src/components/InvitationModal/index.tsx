@@ -38,6 +38,7 @@ import {
   UnorderedList,
   useDisclosure,
   useSteps,
+  VisuallyHidden,
   VStack,
 } from "@chakra-ui/react";
 import React, { PropsWithChildren, useRef, useState } from "react";
@@ -105,8 +106,7 @@ export const InvitationModal = ({
               <Text fontSize={"lg"}>
                 <b>{steps[activeStep].title}</b>
               </Text>
-              <form name="contact" method="POST" data-netlify="true">
-                <input type="hidden" name="form-name" value="contact" />
+              <div>
                 <Hideable hidden={activeStep !== 0}>
                   <Step1
                     {...stepProps}
@@ -143,9 +143,12 @@ export const InvitationModal = ({
                       setRSVP({ ...rsvp, ...rsvpUpdate });
                       alert(JSON.stringify(rsvp));
                     }}
+                    onNoteChange={(notes) =>
+                      setRSVP({ ...rsvp, notes: notes || "" })
+                    }
                   />
                 </Hideable>
-              </form>
+              </div>
             </Stack>
           </ModalBody>
 
@@ -215,7 +218,7 @@ const Step1 = ({
     <Stack border="1px solid" borderColor="gray.200" p={3} borderRadius={"lg"}>
       <Text>{trans(translations.invitation.step1.content, language)}</Text>
       <Heading fontSize={"3xl"}>Shanna & Sam</Heading>
-      <ButtonGroup alignSelf={"end"} size={["sm", "md"]}>
+      <ButtonGroup alignSelf={"center"}>
         <Button colorScheme={"green"} onClick={() => onNext({})}>
           {trans(translations.invitation.step1.accept, language)}
         </Button>
@@ -440,7 +443,8 @@ const Step4 = ({
   invitation,
   rsvp,
   onNext,
-}: StepProps & { rsvp: RSVP }) => {
+  onNoteChange,
+}: StepProps & { rsvp: RSVP; onNoteChange: (notes: string) => void }) => {
   const { tier } = invitation;
   const notesInputRef = React.createRef<HTMLTextAreaElement>();
   return (
@@ -503,6 +507,7 @@ const Step4 = ({
           {trans(translations.invitation.step4.notes.label, language)}
         </FormLabel>
         <Textarea
+          onChange={(e) => onNoteChange(e.currentTarget.value)}
           ref={notesInputRef}
           placeholder={trans(
             translations.invitation.step4.notes.placeholder,
@@ -511,14 +516,25 @@ const Step4 = ({
         />
       </FormControl>
 
-      <Button
-        colorScheme={"green"}
-        onClick={() => {
-          onNext({ notes: notesInputRef.current?.value || "" });
-        }}
-      >
-        {trans(translations.confirm, language)}
-      </Button>
+      <form name="rsvp" method="POST" data-netlify="true">
+        <Stack w="full">
+          <Button type="submit" colorScheme={"green"} w="full">
+            {trans(translations.confirm, language)}
+          </Button>
+          <>
+            <VisuallyHidden>
+              <input type="hidden" name="form-name" value="rsvp" />
+            </VisuallyHidden>
+            <VisuallyHidden>
+              <textarea
+                required={true}
+                name="rsvpjson"
+                value={JSON.stringify(rsvp)}
+              />
+            </VisuallyHidden>
+          </>
+        </Stack>
+      </form>
     </Stack>
   );
 };
