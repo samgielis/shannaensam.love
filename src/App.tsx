@@ -1,9 +1,12 @@
 import { ChakraProvider, useDisclosure } from "@chakra-ui/react";
+import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { InvitationModal } from "./components/InvitationModal";
+import { LanguageContext } from "./context/LanguageContext";
 import { Invitation, INVITATIONS } from "./data/Invitations";
 import { Layout } from "./Layout";
 import { customTheme } from "./theme";
+import { SupportedLanguage } from "./translations";
 
 export const App = () => {
   return (
@@ -18,10 +21,13 @@ interface InvitationScreenProps {
 }
 const InvitationScreen = ({ invitation }: InvitationScreenProps) => {
   const props = useDisclosure({ defaultIsOpen: true });
+  const [language, setLanguage] = useState<SupportedLanguage>("nl");
   return (
-    <Layout>
-      <InvitationModal invitation={invitation} {...props} />
-    </Layout>
+    <LanguageContext.Provider value={{ language, setLanguage }}>
+      <Layout>
+        <InvitationModal invitation={invitation} {...props} />
+      </Layout>
+    </LanguageContext.Provider>
   );
 };
 

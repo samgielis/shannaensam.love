@@ -41,6 +41,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { PropsWithChildren, useRef, useState } from "react";
+import { useLanguage } from "../../context/LanguageContext";
 import { Invitation } from "../../data/Invitations";
 import { RSVP } from "../../data/RSVP";
 import { SupportedLanguage, trans, translations } from "../../translations";
@@ -54,7 +55,7 @@ export const InvitationModal = ({
   invitation,
   ...props
 }: InvitationModalProps) => {
-  const [language, setLanguage] = useState<SupportedLanguage>("nl");
+  const { language } = useLanguage();
   const {
     isOpen: isCantMakeItOpen,
     onOpen: onOpenCantMakeIt,
@@ -171,10 +172,7 @@ export const InvitationModal = ({
                   </Step>
                 ))}
               </Stepper>
-              <LanguageToggle
-                currentLanguage={language}
-                onLanguageChange={setLanguage}
-              />
+              <LanguageToggle />
             </VStack>
           </ModalFooter>
         </ModalContent>

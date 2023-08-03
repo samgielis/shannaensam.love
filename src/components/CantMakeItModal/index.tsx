@@ -16,13 +16,13 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { SupportedLanguage, trans, translations } from "../../translations";
-import { LanguageToggle } from "../LanguageToggle";
+import React from "react";
+import { useLanguage } from "../../context/LanguageContext";
+import { trans, translations } from "../../translations";
 
 type CantMakeItModalProps = Pick<ModalProps, "isOpen" | "onClose"> & {};
 export const CantMakeItModal = ({ ...props }: CantMakeItModalProps) => {
-  const [language, setLanguage] = useState<SupportedLanguage>("nl");
+  const { language } = useLanguage();
   const initialRef = React.useRef(null);
 
   return (
@@ -65,10 +65,6 @@ export const CantMakeItModal = ({ ...props }: CantMakeItModalProps) => {
                 {trans(translations.confirm, language)}
               </Button>
             </ButtonGroup>
-            <LanguageToggle
-              currentLanguage={language}
-              onLanguageChange={setLanguage}
-            />
           </VStack>
         </ModalFooter>
       </ModalContent>

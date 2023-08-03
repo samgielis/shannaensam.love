@@ -1,29 +1,23 @@
 import { Button, ButtonGroup, Flex, Spacer } from "@chakra-ui/react";
-import { SupportedLanguage } from "../../translations";
+import { useLanguage } from "../../context/LanguageContext";
 
-interface LanguageToggleProps {
-  currentLanguage: SupportedLanguage;
-  onLanguageChange(newLanguage: SupportedLanguage): void;
-}
-export const LanguageToggle = ({
-  currentLanguage,
-  onLanguageChange,
-}: LanguageToggleProps): JSX.Element => {
+export const LanguageToggle = (): JSX.Element => {
+  const { language, setLanguage } = useLanguage();
   return (
     <Flex>
       <Spacer />
       <ButtonGroup isAttached>
         <Button
           fontSize={"lg"}
-          isActive={currentLanguage === "nl"}
-          onClick={() => onLanguageChange("nl")}
+          isActive={language === "nl"}
+          onClick={() => setLanguage("nl")}
         >
           🇧🇪
         </Button>
         <Button
           fontSize={"lg"}
-          isActive={currentLanguage === "en"}
-          onClick={() => onLanguageChange("en")}
+          isActive={language === "en"}
+          onClick={() => setLanguage("en")}
         >
           🇬🇧
         </Button>

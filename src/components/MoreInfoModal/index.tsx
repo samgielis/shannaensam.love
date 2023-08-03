@@ -15,8 +15,7 @@ import {
   useClipboard,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { SupportedLanguage } from "../../translations";
+import { useLanguage } from "../../context/LanguageContext";
 import { LanguageToggle } from "../LanguageToggle";
 
 export const MoreInfoModal = (
@@ -24,8 +23,7 @@ export const MoreInfoModal = (
 ) => {
   const clipboard = useClipboard("shannaensam@gmail.com");
   const toast = useToast();
-  const [currentLanguage, setCurrentLanguage] =
-    useState<SupportedLanguage>("nl");
+  const { language } = useLanguage();
 
   const onEmail = () => {
     clipboard.onCopy();
@@ -36,13 +34,11 @@ export const MoreInfoModal = (
       <ModalOverlay />
       <ModalContent>
         <ModalHeader fontFamily={"heading"} fontSize={["4xl", "5xl"]}>
-          {currentLanguage !== "en"
-            ? "Wij gaan trouwen!"
-            : "We're getting married!"}
+          {language !== "en" ? "Wij gaan trouwen!" : "We're getting married!"}
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody fontSize={["md", "lg"]}>
-          {currentLanguage === "en" ? (
+          {language === "en" ? (
             <MainContentEnglish onEmail={onEmail} />
           ) : (
             <MainContentDutch onEmail={onEmail} />
@@ -54,10 +50,7 @@ export const MoreInfoModal = (
 
         <ModalFooter>
           <Spacer />
-          <LanguageToggle
-            currentLanguage={currentLanguage}
-            onLanguageChange={setCurrentLanguage}
-          />
+          <LanguageToggle />
           <Spacer />
         </ModalFooter>
       </ModalContent>
