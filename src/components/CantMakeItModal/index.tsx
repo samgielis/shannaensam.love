@@ -29,44 +29,47 @@ export const CantMakeItModal = ({ ...props }: CantMakeItModalProps) => {
     <Modal {...props} size={"md"} isCentered closeOnOverlayClick={false}>
       <ModalOverlay />
       <ModalContent maxH={"full"} overflow="auto">
-        <ModalHeader>
-          {trans(translations.cantMakeIt.title, language)}
-        </ModalHeader>
-        <ModalCloseButton />
-        <ModalBody pb={6}>
-          <VStack spacing={4}>
-            <Text>{trans(translations.cantMakeIt.message, language)}</Text>
-            <FormControl isRequired>
-              <FormLabel>{trans(translations.name, language)}</FormLabel>
-              <Input ref={initialRef} />
-            </FormControl>
+        {/* When you change this, change helper form in index as well */}
+        <form name="cancellation" method="POST" data-netlify="true">
+          <ModalHeader>
+            {trans(translations.cantMakeIt.title, language)}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <VStack spacing={4}>
+              <Text>{trans(translations.cantMakeIt.message, language)}</Text>
+              <FormControl isRequired>
+                <FormLabel>{trans(translations.name, language)}</FormLabel>
+                <Input ref={initialRef} type="text" name="name" />
+              </FormControl>
 
-            <FormControl isRequired>
-              <FormLabel>{trans(translations.email, language)}</FormLabel>
-              <Input />
-            </FormControl>
+              <FormControl isRequired>
+                <FormLabel>{trans(translations.email, language)}</FormLabel>
+                <Input type="email" name="email" />
+              </FormControl>
 
-            <FormControl>
-              <FormLabel>
-                {trans(translations.invitation.step4.notes.label, language)}
-              </FormLabel>
-              <Textarea />
-            </FormControl>
-          </VStack>
-        </ModalBody>
+              <FormControl>
+                <FormLabel>
+                  {trans(translations.invitation.step4.notes.label, language)}
+                </FormLabel>
+                <Textarea name="message" />
+              </FormControl>
+            </VStack>
+          </ModalBody>
 
-        <ModalFooter>
-          <VStack w="full">
-            <ButtonGroup alignSelf={"end"} size={"md"}>
-              <Button colorScheme="gray" onClick={props.onClose}>
-                {trans(translations.cancel, language)}
-              </Button>
-              <Button colorScheme="green">
-                {trans(translations.confirm, language)}
-              </Button>
-            </ButtonGroup>
-          </VStack>
-        </ModalFooter>
+          <ModalFooter>
+            <VStack w="full">
+              <ButtonGroup alignSelf={"end"} size={"md"}>
+                <Button colorScheme="gray" onClick={props.onClose}>
+                  {trans(translations.cancel, language)}
+                </Button>
+                <Button colorScheme="green" type="submit">
+                  {trans(translations.confirm, language)}
+                </Button>
+              </ButtonGroup>
+            </VStack>
+          </ModalFooter>
+        </form>
       </ModalContent>
     </Modal>
   );
