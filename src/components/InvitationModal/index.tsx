@@ -155,13 +155,22 @@ export const InvitationModal = ({
                 {steps.map((step, index) => (
                   <Step
                     key={index}
-                    onClick={() => setActiveStep(index)}
+                    onClick={
+                      index < 2 || index < activeStep
+                        ? () => setActiveStep(index)
+                        : undefined
+                    }
                     as={HStack}
                     gap={0}
                     spacing={0}
                     m={0}
                   >
-                    <StepIndicator ml={0} cursor="pointer">
+                    <StepIndicator
+                      ml={0}
+                      cursor={
+                        index < 2 || index < activeStep ? "pointer" : "unset"
+                      }
+                    >
                       <StepStatus
                         complete={<StepIcon />}
                         incomplete={<StepNumber />}
