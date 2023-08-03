@@ -4,7 +4,6 @@ import {
   ButtonGroup,
   Checkbox,
   CheckboxGroup,
-  Flex,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -25,7 +24,6 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  Spacer,
   Stack,
   StackDivider,
   Step,
@@ -45,6 +43,7 @@ import React, { PropsWithChildren, useRef, useState } from "react";
 import { Invitation } from "../../data/Invitations";
 import { RSVP } from "../../data/RSVP";
 import { SupportedLanguage, trans, translations } from "../../translations";
+import { LanguageToggle } from "../LanguageToggle";
 
 type InvitationModalProps = Pick<ModalProps, "isOpen" | "onClose"> & {
   invitation: Invitation;
@@ -162,26 +161,10 @@ export const InvitationModal = ({
                 </Step>
               ))}
             </Stepper>
-            <Flex>
-              <Spacer />
-              <ButtonGroup isAttached>
-                <Button
-                  fontSize={"lg"}
-                  isActive={language === "nl"}
-                  onClick={() => setLanguage("nl")}
-                >
-                  🇧🇪
-                </Button>
-                <Button
-                  fontSize={"lg"}
-                  isActive={language === "en"}
-                  onClick={() => setLanguage("en")}
-                >
-                  🇬🇧
-                </Button>
-              </ButtonGroup>
-              <Spacer />
-            </Flex>
+            <LanguageToggle
+              currentLanguage={language}
+              onLanguageChange={setLanguage}
+            />
           </VStack>
         </ModalFooter>
       </ModalContent>

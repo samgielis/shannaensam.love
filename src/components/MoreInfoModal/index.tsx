@@ -1,6 +1,5 @@
 import {
   Button,
-  ButtonGroup,
   Heading,
   Modal,
   ModalBody,
@@ -17,56 +16,49 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { SupportedLanguage } from "../../translations";
+import { LanguageToggle } from "../LanguageToggle";
 
 export const MoreInfoModal = (
   props: Pick<ModalProps, "isOpen" | "onClose">
 ) => {
   const clipboard = useClipboard("shannaensam@gmail.com");
   const toast = useToast();
-  const [isEnglish, setIsEnglish] = useState(false);
+  const [currentLanguage, setCurrentLanguage] =
+    useState<SupportedLanguage>("nl");
 
   const onEmail = () => {
     clipboard.onCopy();
     toast({ title: "E-mailadres gekopieerd.", status: "success" });
   };
   return (
-    <Modal {...props} size={['full',"lg"]} isCentered>
+    <Modal {...props} size={["full", "lg"]} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader fontFamily={"heading"} fontSize={['4xl',"5xl"]}>
-          {!isEnglish ? "Wij gaan trouwen!" : "We're getting married!"}
+        <ModalHeader fontFamily={"heading"} fontSize={["4xl", "5xl"]}>
+          {currentLanguage !== "en"
+            ? "Wij gaan trouwen!"
+            : "We're getting married!"}
         </ModalHeader>
         <ModalCloseButton />
-        <ModalBody fontSize={['md',"lg"]}>
-          {isEnglish ? (
+        <ModalBody fontSize={["md", "lg"]}>
+          {currentLanguage === "en" ? (
             <MainContentEnglish onEmail={onEmail} />
           ) : (
             <MainContentDutch onEmail={onEmail} />
           )}
-                      <Heading mt={5} fontSize={'3xl'}>Shanna & Sam</Heading>
-
+          <Heading mt={5} fontSize={"3xl"}>
+            Shanna & Sam
+          </Heading>
         </ModalBody>
 
         <ModalFooter>
-              <Spacer />
-          <ButtonGroup isAttached >
-            <Button
-              fontSize={"lg"}
-              isActive={!isEnglish}
-              onClick={() => setIsEnglish(false)}
-            >
-              🇧🇪
-            </Button>
-            <Button
-              fontSize={"lg"}
-              isActive={isEnglish}
-              onClick={() => setIsEnglish(true)}
-            >
-              🇬🇧
-            </Button>
-          </ButtonGroup>
           <Spacer />
-        
+          <LanguageToggle
+            currentLanguage={currentLanguage}
+            onLanguageChange={setCurrentLanguage}
+          />
+          <Spacer />
         </ModalFooter>
       </ModalContent>
     </Modal>
@@ -83,7 +75,8 @@ const MainContentDutch = ({ onEmail }: { onEmail(): void }) => {
 
       <Text>
         Op <b>vrijdag 29 september</b> zeggen wij 'Ja', 'Oui', 'Si' en 'Da'
-        tegen elkaar. Als je deze Save The Date leest, ben je alvast uitgenodigd.
+        tegen elkaar. Als je deze Save The Date leest, ben je alvast
+        uitgenodigd.
       </Text>
 
       <Text>
@@ -100,7 +93,7 @@ const MainContentDutch = ({ onEmail }: { onEmail(): void }) => {
           fontFamily={"body"}
           onClick={onEmail}
           colorScheme={"bermuda"}
-          >
+        >
           shannaensam@gmail.com
         </Button>{" "}
         - of door één van ons een bericht te sturen.
@@ -129,8 +122,7 @@ const MainContentEnglish = ({ onEmail }: { onEmail(): void }) => {
         information later on.
       </Text>
       <Text>
-        If you can't make it, or already have questions, you can let us
-        know via{" "}
+        If you can't make it, or already have questions, you can let us know via{" "}
         <Button
           variant="link"
           fontSize={"lg"}
