@@ -29,12 +29,10 @@ export const Step3 = ({ language, invitation, onNext }: StepProps) => {
           <CardBody>
             <Stack spacing={3}>
               <Stack spacing={0}>
-                <Text fontSize={"lg"} fontWeight={"bold"}>
+                <Heading size="md" fontFamily="Quicksand" color="bermuda.500">
                   Stadhuis Diest
-                </Text>
-                <Text fontSize={"sm"} opacity=".8">
-                  Grote markt 1, 3290 Diest
-                </Text>
+                </Heading>
+                <Text color={"gray.500"}>Grote markt 1, 3290 Diest</Text>
               </Stack>
               <Checkbox
                 ml={2}
