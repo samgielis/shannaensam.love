@@ -39,6 +39,7 @@ export const Step3 = ({ language, invitation, onNext }: StepProps) => {
                 value="stadhuis"
                 ref={joinsCivilWeddingInputRef}
                 colorScheme={"bermuda"}
+                defaultChecked={true}
               >
                 {`13${h}30`} -{" "}
                 {trans(translations.invitation.step3.civilWedding, language)}
