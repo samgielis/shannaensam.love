@@ -31,13 +31,13 @@ export const MoreInfoModal = (
   return (
     <Modal {...props} size={["full", "xl"]} isCentered>
       <ModalOverlay />
-      <ModalContent maxH={["full", "70vh"]} display={"flex"} overflow="hidden">
+      <ModalContent maxH={["full", "80vh"]} display={"flex"} overflow="hidden">
         <ModalCloseButton />
         <ModalBody
           fontSize={["lg", "lg"]}
           px={0}
           pb={0}
-          maxH={["100vh", "70vh"]}
+          maxH={["100vh", "80vh"]}
           display="flex"
         >
           <Tabs
@@ -87,15 +87,14 @@ export const MoreInfoModal = (
                   </CardBody>
                 </Card>
               </TabPanel>
+              <ModalFooter>
+                <Spacer />
+                <LanguageToggle />
+                <Spacer />
+              </ModalFooter>
             </TabPanels>
           </Tabs>
         </ModalBody>
-
-        <ModalFooter>
-          <Spacer />
-          <LanguageToggle />
-          <Spacer />
-        </ModalFooter>
       </ModalContent>
     </Modal>
   );
