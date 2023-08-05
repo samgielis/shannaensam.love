@@ -25,7 +25,6 @@ export const Step4 = ({
 }: StepProps & { rsvp: RSVP; onNoteChange: (notes: string) => void }) => {
   const { tier } = invitation;
   const notesInputRef = React.createRef<HTMLTextAreaElement>();
-  const confirmationPath = `${window.location.pathname}?rsvpd=true`;
   return (
     <Stack
       spacing={3}
