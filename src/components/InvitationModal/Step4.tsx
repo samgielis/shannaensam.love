@@ -25,6 +25,7 @@ export const Step4 = ({
 }: StepProps & { rsvp: RSVP; onNoteChange: (notes: string) => void }) => {
   const { tier } = invitation;
   const notesInputRef = React.createRef<HTMLTextAreaElement>();
+  const confirmationPath = `${window.location.pathname}?rsvpd=true`;
   return (
     <Stack
       spacing={3}
@@ -94,7 +95,12 @@ export const Step4 = ({
         />
       </FormControl>
 
-      <form name="rsvp" method="POST" data-netlify="true">
+      <form
+        name="rsvp"
+        method="POST"
+        data-netlify="true"
+        action={`${window.location.pathname}?rsvpd=true`}
+      >
         <Stack w="full">
           <Button type="submit" colorScheme={"green"} w="full">
             {trans(translations.confirm, language)}

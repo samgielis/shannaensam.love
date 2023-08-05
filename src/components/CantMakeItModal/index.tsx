@@ -44,6 +44,7 @@ export const CantMakeItModal = ({ ...props }: CantMakeItModalProps) => {
           method="POST"
           data-netlify="true"
           onChange={checkValidity}
+          action={`${window.location.pathname}?cancelled=true`}
         >
           <ModalHeader>
             {trans(translations.cantMakeIt.title, language)}
