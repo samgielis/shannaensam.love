@@ -36,8 +36,8 @@ export const MoreInfoModal = (
         <ModalBody
           fontSize={["lg", "lg"]}
           px={0}
-          flex={1}
-          maxH={["full", "70vh"]}
+          pb={0}
+          maxH={["100vh", "70vh"]}
           display="flex"
         >
           <Tabs
@@ -59,7 +59,7 @@ export const MoreInfoModal = (
               <Tab>Contact</Tab>
             </TabList>
 
-            <TabPanels flex={1} overflow="auto">
+            <TabPanels flex={1} overflow="auto" maxH="full">
               <TabPanel pb={0} px={[2, 4]}>
                 <TimelineTab />
               </TabPanel>
