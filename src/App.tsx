@@ -53,5 +53,7 @@ const router = createBrowserRouter([
 ]);
 
 function invitationSlug(invitation: Invitation): string {
-  return `/uitnodiging-${invitation.aanspreking.replaceAll(" ", "-")}`;
+  return `/uitnodiging-${encodeURIComponent(
+    invitation.aanspreking.replaceAll(" ", "-")
+  )}`;
 }
