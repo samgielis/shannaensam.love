@@ -1,51 +1,130 @@
 import {
-  Button,
-  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalOverlay,
   ModalProps,
   Spacer,
   Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
-  useClipboard,
-  useToast,
 } from "@chakra-ui/react";
-import { useLanguage } from "../../context/LanguageContext";
+import { EmailLink } from "../EmailLink";
 import { LanguageToggle } from "../LanguageToggle";
+import { HotelCard } from "./HotelCard";
 
 export const MoreInfoModal = (
   props: Pick<ModalProps, "isOpen" | "onClose">
 ) => {
-  const clipboard = useClipboard("shannaensam@gmail.com");
-  const toast = useToast();
-  const { language } = useLanguage();
-
-  const onEmail = () => {
-    clipboard.onCopy();
-    toast({ title: "E-mailadres gekopieerd.", status: "success" });
-  };
   return (
-    <Modal {...props} size={["full", "lg"]} isCentered>
+    <Modal {...props} size={["full", "xl"]} isCentered>
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader fontFamily={"heading"} fontSize={["4xl", "5xl"]}>
-          {language !== "en" ? "Wij gaan trouwen!" : "We're getting married!"}
-        </ModalHeader>
+      <ModalContent maxH={["full", "70vh"]} display={"flex"} overflow="hidden">
         <ModalCloseButton />
-        <ModalBody fontSize={["md", "lg"]}>
-          {language === "en" ? (
-            <MainContentEnglish onEmail={onEmail} />
-          ) : (
-            <MainContentDutch onEmail={onEmail} />
-          )}
-          <Heading mt={5} fontSize={"3xl"}>
-            Shanna & Sam
-          </Heading>
+        <ModalBody
+          fontSize={["lg", "lg"]}
+          px={0}
+          flex={1}
+          maxH={["full", "70vh"]}
+          display="flex"
+        >
+          <Tabs
+            colorScheme={"loveCopper"}
+            size="lg"
+            px={0}
+            flex={1}
+            overflow="auto"
+            display="flex"
+            flexDir={"column"}
+          >
+            <TabList>
+              <Tab>Timeline</Tab>
+              <Tab>Overnachten</Tab>
+              <Tab>Contact</Tab>
+            </TabList>
+
+            <TabPanels flex={1} overflow="auto">
+              <TabPanel>
+                <p>one!</p>
+              </TabPanel>
+              <TabPanel px={2}>
+                <Stack>
+                  <HotelCard
+                    name="B & B “De Meren”"
+                    address="Merenstraat 40, Langdorp"
+                    distanceKm={1}
+                    url="demeren.com"
+                  />
+                  <HotelCard
+                    name="B & B “Zinnen en minnen”"
+                    address="Kipdorp 11, Herselt"
+                    distanceKm={7}
+                    url="zinnenenminnen.be"
+                  />
+                  <HotelCard
+                    name="Hotel ‘s Hertogenmolens"
+                    address="Demerstraat 1, Aarschot"
+                    distanceKm={6}
+                    url="lodge-hotels.be/nl/hotels/b/s-hertogenmolens-aarschot"
+                  />
+                  <HotelCard
+                    name="B & B “De Zil”"
+                    address="Zillekespad 2, Herselt"
+                    distanceKm={6}
+                    url="dezil.be"
+                  />
+                  <HotelCard
+                    name="B & B Ramslo"
+                    address="Oude Steenovenweg 35, Ramsel"
+                    distanceKm={7}
+                    url="ramslo.be"
+                  />
+                  <HotelCard
+                    name="Charmehotel “Pluimpapaver”"
+                    address="Nopstal 51, Rillaar"
+                    distanceKm={8}
+                    url="pluimpapaver.eu"
+                  />
+                  <HotelCard
+                    name="B & B “De Winning”"
+                    address="Brielstraat 35, Messelbroek"
+                    distanceKm={10}
+                    url="dewinningmesselbroek.be"
+                  />
+                  <HotelCard
+                    name="B & B “Vossendries”"
+                    address="Grootveld 1, Nieuwrode"
+                    distanceKm={11}
+                    url="vossendries.com"
+                  />
+                  <HotelCard
+                    name="B & B “Mon Dieu”"
+                    address="Molenstraat 36, Scherpenheuvel"
+                    distanceKm={12}
+                    url="mon-dieu.be"
+                  />
+                </Stack>
+              </TabPanel>
+              <TabPanel>
+                <Stack>
+                  <Text>
+                    Heb je nog vragen? Heb je je uitnodiging al beantwoord, maar
+                    is er toch nog iets gewijzigd?
+                  </Text>
+                  <Text>
+                    Contacteer ons via{" "}
+                    <EmailLink email="shannaensam@gmail.com" />
+                  </Text>
+                </Stack>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
         </ModalBody>
 
         <ModalFooter>
@@ -55,79 +134,5 @@ export const MoreInfoModal = (
         </ModalFooter>
       </ModalContent>
     </Modal>
-  );
-};
-
-const MainContentDutch = ({ onEmail }: { onEmail(): void }) => {
-  return (
-    <Stack>
-      <Text>
-        Ja ja, 't is zover! Na 13 jaar als pubers aan elkaar te kleven, zetten
-        we nu de stap naar een serieuze, volwassen relatie.
-      </Text>
-
-      <Text>
-        Op <b>vrijdag 29 september</b> zeggen wij 'Ja', 'Oui', 'Si' en 'Da'
-        tegen elkaar. Als je deze Save The Date leest, ben je alvast
-        uitgenodigd.
-      </Text>
-
-      <Text>
-        Het feest zal beginnen in de vooravond, in{" "}
-        <b>Gasthof Ter Venne in Aarschot</b>. Concrete info sturen we binnenkort
-        door.
-      </Text>
-      <Text>
-        Als je er niet bij kan zijn of al vragen hebt, mag je ons iets laten
-        weten via{" "}
-        <Button
-          variant="link"
-          fontSize={"lg"}
-          fontFamily={"body"}
-          onClick={onEmail}
-          colorScheme={"bermuda"}
-        >
-          shannaensam@gmail.com
-        </Button>{" "}
-        - of door één van ons een bericht te sturen.
-      </Text>
-      <Text>Hopelijk tot dan!</Text>
-    </Stack>
-  );
-};
-
-const MainContentEnglish = ({ onEmail }: { onEmail(): void }) => {
-  return (
-    <Stack>
-      <Text>
-        Would you look at that! After 13 years of teenage love, we're now taking
-        a step towards a serious, adult relationship.
-      </Text>
-
-      <Text>
-        On <b>Friday the 29th of September</b> we'll be saying 'Ja', 'Oui, 'Si'
-        and 'I do'. If you see this Save The Date, you're invited.
-      </Text>
-
-      <Text>
-        The party will start in the late afternoon, in{" "}
-        <b>Gasthof Ter Venne, Aarschot</b>. We'll send you more concrete
-        information later on.
-      </Text>
-      <Text>
-        If you can't make it, or already have questions, you can let us know via{" "}
-        <Button
-          variant="link"
-          fontSize={"lg"}
-          fontFamily={"body"}
-          onClick={onEmail}
-          colorScheme={"bermuda"}
-        >
-          shannaensam@gmail.com
-        </Button>{" "}
-        - or by messaging one of us.
-      </Text>
-      <Text>Hope to see you then!</Text>
-    </Stack>
   );
 };
