@@ -7,7 +7,6 @@ import {
   FormControl,
   Heading,
   Stack,
-  StackDivider,
   Text,
 } from "@chakra-ui/react";
 import React from "react";
@@ -24,39 +23,40 @@ export const Step3 = ({ language, invitation, onNext }: StepProps) => {
   const joinsPartyInputRef = React.createRef<HTMLInputElement>();
 
   return (
-    <Card variant="outline">
-      <CardBody>
-        <Stack spacing={3}>
-          <FormControl>
-            <CheckboxGroup
-              colorScheme="green"
-              defaultValue={["stadhuis", "ceremonie", "diner", "feest"]}
-            >
-              <Stack spacing={4} divider={<StackDivider />}>
-                {tier === 1 && (
-                  <Stack spacing={3}>
-                    <Stack spacing={0}>
-                      <Text fontSize={"lg"} fontWeight={"bold"}>
-                        Stadhuis Diest
-                      </Text>
-                      <Text fontSize={"sm"} opacity=".8">
-                        Grote markt 1, 3290 Diest
-                      </Text>
-                    </Stack>
-                    <Checkbox
-                      ml={2}
-                      value="stadhuis"
-                      ref={joinsCivilWeddingInputRef}
-                      colorScheme={"bermuda"}
-                    >
-                      {`13${h}30`} -{" "}
-                      {trans(
-                        translations.invitation.step3.civilWedding,
-                        language
-                      )}
-                    </Checkbox>
-                  </Stack>
-                )}
+    <Stack>
+      {tier === 1 && (
+        <Card variant="outline">
+          <CardBody>
+            <Stack spacing={3}>
+              <Stack spacing={0}>
+                <Text fontSize={"lg"} fontWeight={"bold"}>
+                  Stadhuis Diest
+                </Text>
+                <Text fontSize={"sm"} opacity=".8">
+                  Grote markt 1, 3290 Diest
+                </Text>
+              </Stack>
+              <Checkbox
+                ml={2}
+                value="stadhuis"
+                ref={joinsCivilWeddingInputRef}
+                colorScheme={"bermuda"}
+              >
+                {`13${h}30`} -{" "}
+                {trans(translations.invitation.step3.civilWedding, language)}
+              </Checkbox>
+            </Stack>
+          </CardBody>
+        </Card>
+      )}
+      <Card variant="outline">
+        <CardBody>
+          <Stack spacing={3}>
+            <FormControl>
+              <CheckboxGroup
+                colorScheme="green"
+                defaultValue={["stadhuis", "ceremonie", "diner", "feest"]}
+              >
                 <Stack spacing={3}>
                   <Stack spacing={0}>
                     <Heading
@@ -107,25 +107,25 @@ export const Step3 = ({ language, invitation, onNext }: StepProps) => {
                     </Checkbox>
                   </Stack>
                 </Stack>
-              </Stack>
-            </CheckboxGroup>
-          </FormControl>
-          <Button
-            onClick={() => {
-              onNext({
-                joinsCivilWedding:
-                  joinsCivilWeddingInputRef.current?.checked || false,
-                joinsCeremony: joinsCeremonyInputRef.current?.checked || false,
-                joinsDiner: joinsDinerInputRef.current?.checked || false,
-                joinsParty: joinsPartyInputRef.current?.checked || false,
-              });
-            }}
-            colorScheme={"bermuda"}
-          >
-            {trans(translations.next, language)}
-          </Button>
-        </Stack>
-      </CardBody>
-    </Card>
+              </CheckboxGroup>
+            </FormControl>
+          </Stack>
+        </CardBody>
+      </Card>
+      <Button
+        onClick={() => {
+          onNext({
+            joinsCivilWedding:
+              joinsCivilWeddingInputRef.current?.checked || false,
+            joinsCeremony: joinsCeremonyInputRef.current?.checked || false,
+            joinsDiner: joinsDinerInputRef.current?.checked || false,
+            joinsParty: joinsPartyInputRef.current?.checked || false,
+          });
+        }}
+        colorScheme={"bermuda"}
+      >
+        {trans(translations.next, language)}
+      </Button>
+    </Stack>
   );
 };

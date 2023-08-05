@@ -92,16 +92,20 @@ export const InvitationModal = ({
       >
         <ModalOverlay />
         <ModalContent maxH={"full"} overflow="auto">
-          <ModalHeader fontFamily={"heading"} fontSize={["4xl", "4xl"]}>
+          <ModalHeader
+            fontFamily={"heading"}
+            fontSize={["4xl", "4xl"]}
+            px={[4, 6]}
+          >
             {headerText}
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody fontSize={["md", "lg"]} display="flex">
-            <Stack spacing={4} flex={1}>
+          <ModalBody fontSize={["md", "lg"]} display="flex" px={[4, 6]}>
+            <Stack flex={1}>
               {rsvpSuccess && <RSVPReceived />}
               {cancellationSucces && <CancellationReceived />}
               {showSteps && (
-                <Text fontSize={"lg"}>
+                <Text fontSize={["md", "lg"]}>
                   <b>{steps[activeStep].title}</b>
                 </Text>
               )}
