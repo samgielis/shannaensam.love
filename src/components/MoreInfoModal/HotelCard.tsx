@@ -49,7 +49,7 @@ export const HotelCard = ({
             <Link
               colorScheme={"green"}
               color="bermuda.500"
-              href={url}
+              href={`https://${url}`}
               isExternal
             >
               {url.split("/")[0]}
