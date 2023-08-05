@@ -40,6 +40,10 @@ const router = createBrowserRouter([
     path: "/save-the-date",
     element: <Layout />,
   },
+  {
+    path: "/info",
+    element: <Layout openInfo />,
+  },
   ...INVITATIONS.map((invitation) => {
     return {
       path: invitationSlug(invitation),

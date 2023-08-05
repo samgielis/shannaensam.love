@@ -18,8 +18,12 @@ const fullcreenProps = {
   minH: "-webkit-fill-available",
 };
 
-export const Layout = ({ children }: PropsWithChildren) => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
+type LayoutProps = PropsWithChildren<{ openInfo?: boolean }>;
+
+export const Layout = ({ children, openInfo }: LayoutProps) => {
+  const { isOpen, onClose, onOpen } = useDisclosure({
+    defaultIsOpen: openInfo,
+  });
   const { language } = useLanguage();
   return (
     <Box>
