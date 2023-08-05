@@ -9,9 +9,12 @@ import { customTheme } from "./theme";
 import { SupportedLanguage } from "./translations";
 
 export const App = () => {
+  const [language, setLanguage] = useState<SupportedLanguage>("nl");
   return (
     <ChakraProvider theme={customTheme}>
-      <RouterProvider router={router} />
+      <LanguageContext.Provider value={{ language, setLanguage }}>
+        <RouterProvider router={router} />
+      </LanguageContext.Provider>
     </ChakraProvider>
   );
 };
@@ -21,13 +24,10 @@ interface InvitationScreenProps {
 }
 const InvitationScreen = ({ invitation }: InvitationScreenProps) => {
   const props = useDisclosure({ defaultIsOpen: true });
-  const [language, setLanguage] = useState<SupportedLanguage>("nl");
   return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
-      <Layout>
-        <InvitationModal invitation={invitation} {...props} />
-      </Layout>
-    </LanguageContext.Provider>
+    <Layout>
+      <InvitationModal invitation={invitation} {...props} />
+    </Layout>
   );
 };
 
