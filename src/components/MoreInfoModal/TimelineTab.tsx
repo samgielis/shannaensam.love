@@ -1,6 +1,7 @@
 import {
   Card,
   CardBody,
+  chakra,
   Heading,
   ListItem,
   Stack,
@@ -59,6 +60,14 @@ export const TimelineTab = () => {
           </Stack>
         </CardBody>
       </Card>
+
+      <Text textAlign={"center"} fontSize={"md"} pt={4}>
+        {trans(translations.moreInfo.tabs.overview.gift, language)}:{" "}
+      </Text>
+      <Text textAlign={"center"} fontSize="md">
+        <chakra.span color={"bermuda.500"}>BE32 0636 2351 2702</chakra.span>{" "}
+        {trans(translations.moreInfo.tabs.overview.orSupriseUs, language)}
+      </Text>
     </Stack>
   );
 };

@@ -17,6 +17,8 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
+import { useLanguage } from "../../context/LanguageContext";
+import { trans, translations } from "../../translations";
 import { EmailLink } from "../EmailLink";
 import { LanguageToggle } from "../LanguageToggle";
 import { HotelsTab } from "./HotelsTab";
@@ -25,6 +27,7 @@ import { TimelineTab } from "./TimelineTab";
 export const MoreInfoModal = (
   props: Pick<ModalProps, "isOpen" | "onClose">
 ) => {
+  const { language } = useLanguage();
   return (
     <Modal {...props} size={["full", "xl"]} isCentered>
       <ModalOverlay />
@@ -47,28 +50,37 @@ export const MoreInfoModal = (
             flexDir={"column"}
           >
             <TabList>
-              <Tab>Overzicht</Tab>
-              <Tab>Overnachten</Tab>
+              <Tab>
+                {trans(translations.moreInfo.tabs.overview.title, language)}
+              </Tab>
+              <Tab>
+                {trans(translations.moreInfo.tabs.hotels.title, language)}
+              </Tab>
               <Tab>Contact</Tab>
             </TabList>
 
             <TabPanels flex={1} overflow="auto">
-              <TabPanel>
+              <TabPanel pb={0} px={[2, 4]}>
                 <TimelineTab />
               </TabPanel>
               <TabPanel px={[2, 4]}>
                 <HotelsTab />
               </TabPanel>
-              <TabPanel>
+              <TabPanel pb={0} px={[2, 4]}>
                 <Card variant={"outline"}>
                   <CardBody>
                     <Stack>
                       <Text>
-                        Heb je nog vragen? Heb je je uitnodiging al beantwoord,
-                        maar is er toch nog iets gewijzigd?
+                        {trans(
+                          translations.moreInfo.tabs.contact.questions,
+                          language
+                        )}
                       </Text>
                       <Text>
-                        Contacteer ons via{" "}
+                        {trans(
+                          translations.moreInfo.tabs.contact.letUsKnow,
+                          language
+                        )}{" "}
                         <EmailLink email="shannaensam@gmail.com" />
                       </Text>
                     </Stack>

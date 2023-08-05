@@ -32,6 +32,38 @@ export const translations = {
       nl: "Meer info",
       en: "More info",
     },
+    tabs: {
+      overview: {
+        title: {
+          nl: "Overzicht",
+          en: "Overview",
+        },
+        gift: {
+          nl: "Cadeautip",
+          en: `Gift idea`,
+        },
+        orSupriseUs: {
+          nl: "of verras ons!",
+          en: `or suprise us!`,
+        },
+      },
+      hotels: {
+        title: {
+          nl: "Overnachten",
+          en: "Hotels",
+        },
+      },
+      contact: {
+        questions: {
+          nl: `Heb je nog vragen? Heb je je uitnodiging al beantwoord, maar is er toch nog iets gewijzigd?`,
+          en: `Do you have questions? Already responded to the invitation, but something changed?`,
+        },
+        letUsKnow: {
+          nl: `Contacteer ons via`,
+          en: `Let us know at`,
+        },
+      },
+    },
   },
   cantMakeIt: {
     title: {
