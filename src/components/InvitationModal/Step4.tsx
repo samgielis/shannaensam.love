@@ -114,12 +114,7 @@ export const Step4 = ({
           </FormControl>
         </CardBody>
       </Card>
-      <form
-        name="rsvp"
-        method="POST"
-        data-netlify="true"
-        action={`${window.location.pathname}?rsvpd=true`}
-      >
+      <form name="rsvp" method="POST" data-netlify="true" action="/confirmed">
         <Stack w="full">
           <Button type="submit" colorScheme={"bermuda"} w="full">
             {trans(translations.confirm, language)}

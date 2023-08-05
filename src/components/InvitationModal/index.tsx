@@ -15,7 +15,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { PropsWithChildren, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { Invitation } from "../../data/Invitations";
 import { RSVP } from "../../data/RSVP";
@@ -32,9 +31,13 @@ import { InvitationStepper } from "./Stepper";
 
 type InvitationModalProps = Pick<ModalProps, "isOpen" | "onClose"> & {
   invitation: Invitation;
+  rsvpSuccess?: boolean;
+  cancellationSucces?: boolean;
 };
 export const InvitationModal = ({
   invitation,
+  rsvpSuccess,
+  cancellationSucces,
   ...props
 }: InvitationModalProps) => {
   const { language } = useLanguage();
@@ -43,11 +46,6 @@ export const InvitationModal = ({
     onOpen: onOpenCantMakeIt,
     onClose: onCloseCantMakeIt,
   } = useDisclosure();
-
-  const [searchParams] = useSearchParams();
-
-  const rsvpSuccess = searchParams.get("rsvpd") === "true";
-  const cancellationSucces = searchParams.get("cancelled") === "true";
 
   const steps = [
     { title: trans(translations.invitation.step1.title, language) },

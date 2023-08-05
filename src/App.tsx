@@ -21,12 +21,15 @@ export const App = () => {
 
 interface InvitationScreenProps {
   invitation: Invitation;
+  rsvpSuccess?: boolean;
+  cancellationSucces?: boolean;
 }
-const InvitationScreen = ({ invitation }: InvitationScreenProps) => {
-  const props = useDisclosure({ defaultIsOpen: true });
+const InvitationScreen = (props: InvitationScreenProps) => {
+  const modalProps = useDisclosure({ defaultIsOpen: true });
+
   return (
     <Layout>
-      <InvitationModal invitation={invitation} {...props} />
+      <InvitationModal {...props} {...modalProps} />
     </Layout>
   );
 };
@@ -43,6 +46,24 @@ const router = createBrowserRouter([
   {
     path: "/info",
     element: <Layout openInfo />,
+  },
+  {
+    path: "/confirmed",
+    element: (
+      <InvitationScreen
+        rsvpSuccess
+        invitation={{ aanspreking: "Bedankt", tier: 3, plusOne: false }}
+      />
+    ),
+  },
+  {
+    path: "/cancelled",
+    element: (
+      <InvitationScreen
+        cancellationSucces
+        invitation={{ aanspreking: "Bedankt", tier: 3, plusOne: false }}
+      />
+    ),
   },
   ...INVITATIONS.map((invitation) => {
     return {
