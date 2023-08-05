@@ -19,7 +19,13 @@ export const InvitationStepper = ({
   setActiveStep,
 }: InvitationStepperProps) => {
   return (
-    <Stepper size="md" index={activeStep} gap="0" w="full">
+    <Stepper
+      size="md"
+      index={activeStep}
+      gap="0"
+      w="full"
+      colorScheme={"bermuda"}
+    >
       {[0, 1, 2, 3].map((index) => (
         <Step
           key={index}

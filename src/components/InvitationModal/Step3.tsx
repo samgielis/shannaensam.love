@@ -1,8 +1,11 @@
 import {
   Button,
+  Card,
+  CardBody,
   Checkbox,
   CheckboxGroup,
   FormControl,
+  Heading,
   Stack,
   StackDivider,
   Text,
@@ -21,88 +24,108 @@ export const Step3 = ({ language, invitation, onNext }: StepProps) => {
   const joinsPartyInputRef = React.createRef<HTMLInputElement>();
 
   return (
-    <Stack
-      spacing={3}
-      mt={1}
-      border="1px solid"
-      borderColor="gray.200"
-      p={3}
-      borderRadius={"lg"}
-    >
-      <FormControl>
-        <CheckboxGroup
-          colorScheme="green"
-          defaultValue={["stadhuis", "ceremonie", "diner", "feest"]}
-        >
-          <Stack spacing={4} divider={<StackDivider />}>
-            {tier === 1 && (
-              <Stack spacing={3}>
-                <Stack spacing={0}>
-                  <Text fontSize={"lg"} fontWeight={"bold"}>
-                    Stadhuis Diest
-                  </Text>
-                  <Text fontSize={"sm"} opacity=".8">
-                    Grote markt 1, 3290 Diest
-                  </Text>
-                </Stack>
-                <Checkbox
-                  ml={2}
-                  value="stadhuis"
-                  ref={joinsCivilWeddingInputRef}
-                >
-                  {`13${h}30`} -{" "}
-                  {trans(translations.invitation.step3.civilWedding, language)}
-                </Checkbox>
-              </Stack>
-            )}
-            <Stack spacing={3}>
-              <Stack spacing={0}>
-                <Text fontSize={"lg"} fontWeight={"bold"}>
-                  Gasthof Ter Venne
-                </Text>
-                <Text fontSize={"sm"} opacity=".8">
-                  Diepvenstraat 2, 3201 Aarschot
-                </Text>
-              </Stack>
-              <Stack>
+    <Card variant="outline">
+      <CardBody>
+        <Stack spacing={3}>
+          <FormControl>
+            <CheckboxGroup
+              colorScheme="green"
+              defaultValue={["stadhuis", "ceremonie", "diner", "feest"]}
+            >
+              <Stack spacing={4} divider={<StackDivider />}>
                 {tier === 1 && (
-                  <Checkbox
-                    ml={2}
-                    value="ceremonie"
-                    ref={joinsCeremonyInputRef}
-                  >
-                    18{h} -{" "}
-                    {trans(translations.invitation.step3.ceremony, language)}
-                  </Checkbox>
+                  <Stack spacing={3}>
+                    <Stack spacing={0}>
+                      <Text fontSize={"lg"} fontWeight={"bold"}>
+                        Stadhuis Diest
+                      </Text>
+                      <Text fontSize={"sm"} opacity=".8">
+                        Grote markt 1, 3290 Diest
+                      </Text>
+                    </Stack>
+                    <Checkbox
+                      ml={2}
+                      value="stadhuis"
+                      ref={joinsCivilWeddingInputRef}
+                      colorScheme={"bermuda"}
+                    >
+                      {`13${h}30`} -{" "}
+                      {trans(
+                        translations.invitation.step3.civilWedding,
+                        language
+                      )}
+                    </Checkbox>
+                  </Stack>
                 )}
-                {tier < 3 && (
-                  <Checkbox ml={2} value="diner" ref={joinsDinerInputRef}>
-                    19{h} -{" "}
-                    {trans(translations.invitation.step3.diner, language)}
-                  </Checkbox>
-                )}
-                <Checkbox ml={2} value="feest" ref={joinsPartyInputRef}>
-                  22{h} - {trans(translations.invitation.step3.party, language)}
-                </Checkbox>
+                <Stack spacing={3}>
+                  <Stack spacing={0}>
+                    <Heading
+                      size="md"
+                      fontFamily="Quicksand"
+                      color="bermuda.500"
+                    >
+                      Gasthof Ter Venne
+                    </Heading>
+                    <Text color={"gray.500"}>
+                      Diepvenstraat 2, 3201 Aarschot
+                    </Text>
+                  </Stack>
+                  <Stack>
+                    {tier === 1 && (
+                      <Checkbox
+                        colorScheme={"bermuda"}
+                        ml={2}
+                        value="ceremonie"
+                        ref={joinsCeremonyInputRef}
+                      >
+                        18{h} -{" "}
+                        {trans(
+                          translations.invitation.step3.ceremony,
+                          language
+                        )}
+                      </Checkbox>
+                    )}
+                    {tier < 3 && (
+                      <Checkbox
+                        ml={2}
+                        value="diner"
+                        ref={joinsDinerInputRef}
+                        colorScheme={"bermuda"}
+                      >
+                        19{h} -{" "}
+                        {trans(translations.invitation.step3.diner, language)}
+                      </Checkbox>
+                    )}
+                    <Checkbox
+                      ml={2}
+                      value="feest"
+                      ref={joinsPartyInputRef}
+                      colorScheme={"bermuda"}
+                    >
+                      22{h} -{" "}
+                      {trans(translations.invitation.step3.party, language)}
+                    </Checkbox>
+                  </Stack>
+                </Stack>
               </Stack>
-            </Stack>
-          </Stack>
-        </CheckboxGroup>
-      </FormControl>
-      <Button
-        onClick={() => {
-          onNext({
-            joinsCivilWedding:
-              joinsCivilWeddingInputRef.current?.checked || false,
-            joinsCeremony: joinsCeremonyInputRef.current?.checked || false,
-            joinsDiner: joinsDinerInputRef.current?.checked || false,
-            joinsParty: joinsPartyInputRef.current?.checked || false,
-          });
-        }}
-        colorScheme={"green"}
-      >
-        {trans(translations.next, language)}
-      </Button>
-    </Stack>
+            </CheckboxGroup>
+          </FormControl>
+          <Button
+            onClick={() => {
+              onNext({
+                joinsCivilWedding:
+                  joinsCivilWeddingInputRef.current?.checked || false,
+                joinsCeremony: joinsCeremonyInputRef.current?.checked || false,
+                joinsDiner: joinsDinerInputRef.current?.checked || false,
+                joinsParty: joinsPartyInputRef.current?.checked || false,
+              });
+            }}
+            colorScheme={"bermuda"}
+          >
+            {trans(translations.next, language)}
+          </Button>
+        </Stack>
+      </CardBody>
+    </Card>
   );
 };
