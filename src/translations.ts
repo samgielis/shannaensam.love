@@ -160,6 +160,31 @@ export const translations = {
       },
     },
   },
+  confirmationReceived: {
+    title: {
+      nl: `Bedankt om te bevestigen`,
+      en: `Thanks for confirming`,
+    },
+    happyYoullBeThere: {
+      nl: `Fijn dat je erbij zal zijn!`,
+      en: `We’re glad you’ll be there!`,
+    },
+    infoEmailSoon: {
+      nl: `Je krijgt binnenkort van ons een bevestigingsmail waarin je alle info terugvindt. Tot snel!`,
+      en: `We’ll send you a confirmation email soon, where you can find all the information needed. See you soon!`,
+    },
+  },
+  cancellationReceived: {
+    title: {
+      nl: `Bedankt om iets te laten weten`,
+      en: `Thanks for letting us know`,
+    },
+    message: {
+      nl: `We hebben je informatie goed ontvangen. Jammer dat je er niet bij kan
+      zijn!`,
+      en: `We’ve received your information. We’re sorry you can’t be there!`,
+    },
+  },
 };
 
 export function trans(
