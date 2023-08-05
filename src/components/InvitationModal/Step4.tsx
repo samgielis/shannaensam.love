@@ -113,6 +113,7 @@ export const Step4 = ({
                 required={true}
                 name="rsvpjson"
                 value={JSON.stringify(rsvp)}
+                readOnly
               />
             </VisuallyHidden>
           </>
