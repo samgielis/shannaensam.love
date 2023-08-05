@@ -91,83 +91,89 @@ export const InvitationModal = ({
         closeOnOverlayClick={!showSteps}
       >
         <ModalOverlay />
-        <ModalContent maxH={"full"} overflow="auto">
-          <ModalHeader
-            fontFamily={"heading"}
-            fontSize={["4xl", "4xl"]}
-            px={[4, 6]}
-          >
-            {headerText}
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody fontSize={["md", "lg"]} display="flex" px={[4, 6]}>
-            <Stack flex={1}>
-              {rsvpSuccess && <RSVPReceived />}
-              {cancellationSucces && <CancellationReceived />}
-              {showSteps && (
-                <Text fontSize={["md", "lg"]}>
-                  <b>{steps[activeStep].title}</b>
-                </Text>
-              )}
-              {showSteps && (
-                <div>
-                  <Hideable hidden={activeStep !== 0}>
-                    <Step1
-                      {...stepProps}
-                      onNext={(rsvpUpdate) => {
-                        setRSVP({ ...rsvp, ...rsvpUpdate });
-                        setActiveStep(1);
-                      }}
-                      onCantMakeIt={onOpenCantMakeIt}
-                    />
-                  </Hideable>
-                  <Hideable hidden={activeStep !== 1}>
-                    <Step2
-                      {...stepProps}
-                      onNext={(rsvpUpdate) => {
-                        setRSVP({ ...rsvp, ...rsvpUpdate });
-                        setActiveStep(2);
-                      }}
-                    />
-                  </Hideable>
-                  <Hideable hidden={activeStep !== 2}>
-                    <Step3
-                      {...stepProps}
-                      onNext={(rsvpUpdate) => {
-                        setRSVP({ ...rsvp, ...rsvpUpdate });
-                        setActiveStep(3);
-                      }}
-                    />
-                  </Hideable>
-                  <Hideable hidden={activeStep !== 3}>
-                    <Step4
-                      {...stepProps}
-                      rsvp={rsvp}
-                      onNext={(rsvpUpdate) => {
-                        setRSVP({ ...rsvp, ...rsvpUpdate });
-                        alert(JSON.stringify(rsvp));
-                      }}
-                      onNoteChange={(notes) =>
-                        setRSVP({ ...rsvp, notes: notes || "" })
-                      }
-                    />
-                  </Hideable>
-                </div>
-              )}
-            </Stack>
-          </ModalBody>
+        <ModalContent
+          maxH={["full", "80vh"]}
+          display={"flex"}
+          overflow="hidden"
+        >
+          <Stack spacing={0} maxH="full" overflow={"auto"}>
+            <ModalHeader
+              fontFamily={"heading"}
+              fontSize={["4xl", "4xl"]}
+              px={[4, 6]}
+            >
+              {headerText}
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody fontSize={["md", "lg"]} display="flex" px={[4, 6]}>
+              <Stack flex={1}>
+                {rsvpSuccess && <RSVPReceived />}
+                {cancellationSucces && <CancellationReceived />}
+                {showSteps && (
+                  <Text fontSize={["md", "lg"]}>
+                    <b>{steps[activeStep].title}</b>
+                  </Text>
+                )}
+                {showSteps && (
+                  <div>
+                    <Hideable hidden={activeStep !== 0}>
+                      <Step1
+                        {...stepProps}
+                        onNext={(rsvpUpdate) => {
+                          setRSVP({ ...rsvp, ...rsvpUpdate });
+                          setActiveStep(1);
+                        }}
+                        onCantMakeIt={onOpenCantMakeIt}
+                      />
+                    </Hideable>
+                    <Hideable hidden={activeStep !== 1}>
+                      <Step2
+                        {...stepProps}
+                        onNext={(rsvpUpdate) => {
+                          setRSVP({ ...rsvp, ...rsvpUpdate });
+                          setActiveStep(2);
+                        }}
+                      />
+                    </Hideable>
+                    <Hideable hidden={activeStep !== 2}>
+                      <Step3
+                        {...stepProps}
+                        onNext={(rsvpUpdate) => {
+                          setRSVP({ ...rsvp, ...rsvpUpdate });
+                          setActiveStep(3);
+                        }}
+                      />
+                    </Hideable>
+                    <Hideable hidden={activeStep !== 3}>
+                      <Step4
+                        {...stepProps}
+                        rsvp={rsvp}
+                        onNext={(rsvpUpdate) => {
+                          setRSVP({ ...rsvp, ...rsvpUpdate });
+                          alert(JSON.stringify(rsvp));
+                        }}
+                        onNoteChange={(notes) =>
+                          setRSVP({ ...rsvp, notes: notes || "" })
+                        }
+                      />
+                    </Hideable>
+                  </div>
+                )}
+              </Stack>
+            </ModalBody>
 
-          <ModalFooter>
-            <VStack w="full">
-              {showSteps && (
-                <InvitationStepper
-                  activeStep={activeStep}
-                  setActiveStep={setActiveStep}
-                />
-              )}
-              <LanguageToggle />
-            </VStack>
-          </ModalFooter>
+            <ModalFooter>
+              <VStack w="full">
+                {showSteps && (
+                  <InvitationStepper
+                    activeStep={activeStep}
+                    setActiveStep={setActiveStep}
+                  />
+                )}
+                <LanguageToggle />
+              </VStack>
+            </ModalFooter>
+          </Stack>
         </ModalContent>
       </Modal>
     </>
