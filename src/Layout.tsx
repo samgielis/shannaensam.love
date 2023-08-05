@@ -31,7 +31,7 @@ export const Layout = ({ children, openInfo }: LayoutProps) => {
         pos="absolute"
         {...fullcreenProps}
         objectFit={"cover"}
-        src={`bg-xs.jpg`}
+        src={`/bg-xs.jpg`}
         zIndex="-1"
         filter="blur(2px)"
       />
@@ -39,7 +39,7 @@ export const Layout = ({ children, openInfo }: LayoutProps) => {
         pos="absolute"
         {...fullcreenProps}
         objectFit={"cover"}
-        srcSet={`bg-md.jpg 2048w, bg-lg.jpg 4096w, bg-full.jpg 4096w`}
+        srcSet={`/bg-md.jpg 2048w, /bg-lg.jpg 4096w, /bg-full.jpg 4096w`}
       />
       <Box
         textAlign="center"

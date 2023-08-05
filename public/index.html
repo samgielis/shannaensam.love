@@ -33,14 +33,14 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
 
-  <form netlify netlify-honeypot="bot-field" hidden name="cancellation" action="/cancelled">
+  <form netlify netlify-honeypot="bot-field" hidden name="cancellation" action="/cancelled/redirect">
     <input type="text" name="subject" />
     <input type="text" name="name" />
     <input type="email" name="email" />
     <textarea name="message"></textarea>
   </form>
 
-  <form netlify netlify-honeypot="bot-field" hidden name="rsvp" action="/confirmed">
+  <form netlify netlify-honeypot="bot-field" hidden name="rsvp" action="/confirmed/redirect">
     <textarea name="rsvpjson"></textarea>
   </form>
 
