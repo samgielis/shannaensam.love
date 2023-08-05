@@ -14,7 +14,7 @@ export const HotelsTab = () => {
         name="B & B “Zinnen en minnen”"
         address="Kipdorp 11, Herselt"
         distanceKm={7}
-        url="zinnenenminnen.be"
+        url="zinnen-en-minnen.be"
       />
       <HotelCard
         name="Hotel ‘s Hertogenmolens"
