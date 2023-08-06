@@ -42,7 +42,7 @@ export const INVITATIONS: Invitation[] = [
   },
   {
     aanspreking: "Suzanne",
-    plusOne: false,
+    plusOne: true,
     tier: 1,
   },
   {
