@@ -14,12 +14,22 @@ export const Step1 = ({
   language,
   onNext,
   onCantMakeIt,
+  invitation,
 }: StepProps & { onCantMakeIt(): void }) => {
+  const beforeDate =
+    invitation.tier === 3
+      ? translations.invitation.step1.beforeDate.tier3
+      : translations.invitation.step1.beforeDate.default;
   return (
     <Card variant="outline">
       <CardBody>
         <Stack>
-          <Text>{trans(translations.invitation.step1.content, language)}</Text>
+          <Text>
+            {`${trans(translations.invitation.step1.content, language)} ${trans(
+              beforeDate,
+              language
+            )}.`}
+          </Text>
           <Heading fontSize={"3xl"}>Shanna & Sam</Heading>
           <ButtonGroup alignSelf={"center"}>
             <Button colorScheme={"bermuda"} onClick={() => onNext({})}>

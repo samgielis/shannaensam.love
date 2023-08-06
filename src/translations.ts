@@ -89,10 +89,20 @@ export const translations = {
       content: {
         nl: `Op 29 september 2023 geven wij elkaar het jawoord. Dat willen we samen met jou vieren!
                 
-                Gelieve je aanwezigheid te bevestigen voor 20 augustus.`,
+                Gelieve je aanwezigheid te bevestigen voor`,
         en: `We're getting married on September 29th 2023. We'd love to celebrate with you!
                 
-                Please RSVP before August 20th.`,
+                Please RSVP before`,
+      },
+      beforeDate: {
+        tier3: {
+          nl: "10 september",
+          en: "September 10th",
+        },
+        default: {
+          nl: "20 augustus",
+          en: "August 20th",
+        },
       },
       accept: {
         nl: "Ik kom!",
