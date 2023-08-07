@@ -14,6 +14,7 @@ import {
   ModalProps,
   Text,
   Textarea,
+  VisuallyHidden,
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -87,6 +88,9 @@ export const CantMakeItModal = ({ ...props }: CantMakeItModalProps) => {
                 </Button>
               </ButtonGroup>
             </VStack>
+            <VisuallyHidden>
+              <input type="hidden" name="form-name" value="cancelled" />
+            </VisuallyHidden>
           </ModalFooter>
         </form>
       </ModalContent>
