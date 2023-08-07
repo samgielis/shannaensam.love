@@ -39,12 +39,12 @@ export const CantMakeItModal = ({ ...props }: CantMakeItModalProps) => {
       <ModalContent maxH={"full"} overflow="auto">
         {/* When you change this, change helper form in index as well */}
         <form
-          ref={formRef}
           name="cancellation"
           method="POST"
           data-netlify="true"
+          action="/cancelled/redirect/"
+          ref={formRef}
           onChange={checkValidity}
-          action="/klaar/redirect/"
         >
           <ModalHeader>
             {trans(translations.cantMakeIt.title, language)}
