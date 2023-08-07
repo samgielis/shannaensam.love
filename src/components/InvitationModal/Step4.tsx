@@ -118,7 +118,7 @@ export const Step4 = ({
         name="rsvp"
         method="POST"
         data-netlify="true"
-        action="/confirmed/redirect"
+        action="/confirmed/redirect/"
       >
         <Stack w="full">
           <Button type="submit" colorScheme={"bermuda"} w="full">
