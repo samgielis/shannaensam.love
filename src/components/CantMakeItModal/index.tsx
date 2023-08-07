@@ -39,7 +39,7 @@ export const CantMakeItModal = ({ ...props }: CantMakeItModalProps) => {
       <ModalContent maxH={"full"} overflow="auto">
         {/* When you change this, change helper form in index as well */}
         <form
-          name="cancellation"
+          name="cancelled"
           method="POST"
           data-netlify="true"
           action="/cancelled/redirect/"
